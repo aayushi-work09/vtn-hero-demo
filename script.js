@@ -14,7 +14,7 @@ const open=id=>$('#'+id).classList.add('on'),close=id=>$('#'+id).classList.remov
 
 function go(id){
  if(rec)stopRec();closeAll();$('#mini').classList.remove('on');cur=id;
- $$('.scr').forEach(s=>s.classList.toggle('on',s.id===id));
+ $$('.scr').forEach(s=>s.classList.toggle('on',s.id===id));const sc=$('#'+id);if(sc&&sc.classList.contains('scr'))sc.scrollTop=0;
  const m=MAIN.includes(id);$('#nav').classList.toggle('off',!m);$('#fab').classList.toggle('off',!(id==='home'||id==='notes'));
  $('#sBtm').style.display=id==='story'?'flex':'none';
  const ix={home:0,notes:1,journal:3,novels:4};$$('#nav button').forEach((b,i)=>b.classList.toggle('on',ix[id]===i));
@@ -98,6 +98,7 @@ $('#replay').onclick=()=>{if(!playing)reset(),demo()};
 
 // ---- auto demo: a ghost finger taps the real buttons ----
 async function tap(sel,w=600){const el=$(sel);if(!playing||!el)return;
+ el.scrollIntoView({block:'nearest',inline:'nearest'});
  const a=app.getBoundingClientRect(),r=el.getBoundingClientRect();ghost.style.opacity=.9;
  ghost.style.transform=`translate(${r.left-a.left+r.width/2}px,${r.top-a.top+r.height/2}px)`;
  await sleep(950);if(!playing)return;ghost.classList.remove('rip');void ghost.offsetWidth;ghost.classList.add('rip');

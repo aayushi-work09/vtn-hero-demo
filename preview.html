@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voice To Note – In-app Hero Preview</title>
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#0a0a0c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
+.top{padding:10px 12px 6px;text-align:center;font-size:12px;color:#9a9aa0;max-width:440px;line-height:1.4}
+.seg{display:inline-flex;background:#1c1c1e;border-radius:99px;padding:4px;margin-bottom:6px}
+.seg button{font:inherit;font-size:13px;color:#aaa;background:none;border:0;border-radius:99px;padding:8px 16px;cursor:pointer}
+.seg button.on{background:#ff1f57;color:#fff}
+.seg button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.wrap{flex:none;width:calc(360px*var(--s,1));height:calc(800px*var(--s,1))}
+.phone{width:360px;height:800px;background:#000;border-radius:28px;overflow:hidden;position:relative;transform-origin:0 0;transform:scale(var(--s,1));box-shadow:0 0 0 1px #2a2a2e}
+.hdr{height:100px;display:flex;align-items:center;gap:10px;padding:26px 14px 0}
+.av{width:40px;height:40px;border-radius:50%;background:#ff5a1f;display:grid;place-items:center;font-weight:700}
+.hi{flex:1}.hi small{color:#9a9aa0;font-size:12px}.hi b{display:block;font-size:19px}
+.rb{width:36px;height:36px;border-radius:50%;background:#1f1f22;display:grid;place-items:center;font-size:14px}
+.slot{position:relative;height:460px;overflow:hidden}
+.slot iframe{position:absolute;left:0;top:0;width:420px;height:537px;border:0;transform-origin:0 0;transform:scale(.857)}
+.slot img,.bot{display:block;width:360px}
+.slot img{height:460px}.bot{height:240px}
+.slot img[hidden],.slot iframe[hidden]{display:none}
+</style>
+</head>
+<body>
+<div class="top" id="top">
+ <div class="seg" role="group" aria-label="Preview mode"><button id="bB">Before</button><button id="bA" class="on">After (with animation)</button></div><br>
+ The live animation replaces the hero area (banner, tiles, novel card, game). The header, tabs, floating mic and bottom navigation are unchanged. Tap inside the animation to try it.
+</div>
+<div class="wrap" id="wrap"><div class="phone">
+ <div class="hdr"><div class="av">U</div><div class="hi"><small>Good evening</small><b>Hi, User</b></div><div class="rb">?</div><div class="rb">⚙</div></div>
+ <div class="slot">
+  <iframe id="fr" src="index.html" title="Animated hero section" loading="eager"></iframe>
+  <img id="im" src="preview-before.jpg" alt="Current hero section of the app" hidden>
+ </div>
+ <img class="bot" src="preview-bottom.jpg" alt="Recent and pinned notes tabs, floating mic and bottom navigation">
+</div></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),fr=$('#fr'),im=$('#im');
+function fit(){const h=innerHeight-$('#top').offsetHeight-8;document.documentElement.style.setProperty('--s',Math.max(.4,Math.min(innerWidth/360,h/800,1.3)))}
+function mode(after){$('#bA').classList.toggle('on',after);$('#bB').classList.toggle('on',!after);
+ im.hidden=after;fr.hidden=!after;fr.src=after?'index.html':'about:blank'}
+$('#bA').onclick=()=>mode(true);$('#bB').onclick=()=>mode(false);
+addEventListener('resize',fit);fit();setTimeout(fit,300);
+})();
+</script>
+</body>
+</html>
