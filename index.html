@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voice To Note – Hero Motion Sample</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app" id="app" aria-label="Voice To Note interactive demo">
+<div class="toast" id="toast"></div><div class="ghost" id="ghost"></div>
+<button class="demo" id="replay"></button>
+
+<section class="scr on" id="home">
+ <div class="row"><div class="av">U</div><div class="hi"><small>Good evening</small><b>Hi, User</b></div><button class="rb" data-toast="Help centre">?</button><button class="rb" data-toast="Settings">⚙</button></div>
+ <button class="prem" id="premBtn" data-open="pro"><span style="font-size:28px">⚡</span><span><b>Go Premium</b><small>Upgrade your experience</small></span><i>›</i></button>
+ <div class="g2"><button class="tile" id="newTile" data-go="editor"><em>✎</em><small>Make a</small><b>New Note</b></button><button class="tile" data-act="recent"><em>◷</em><small>Open the most</small><b>Recent Note</b></button></div>
+ <button class="nov" data-go="novels"><div><b style="font-size:12px">New Releases</b><b style="display:block;font-size:17px;margin-top:6px">The Queen Who Tamed the King</b><small>Access thousands of eNovels, anytime anywhere.</small><span class="pill">Read Now</span></div><span class="cov">The Queen Who Tamed the King</span></button>
+ <button class="game" data-open="game"><em>🎮</em><span><small>Can you beat your speed?</small><b>Play the game!</b></span></button>
+ <div class="tabs" id="htabs"><button class="on" data-tab="r">Recent Notes</button><button data-tab="p">Pinned Notes</button></div>
+ <div id="homeList"></div>
+</section>
+
+<section class="scr" id="notes"><h2>My Notes</h2>
+ <div class="tabs" style="margin:0 0 6px"><button class="on" data-nt="n">Notes</button><button id="tabC" data-nt="c">Collections</button></div><div id="noteList"></div></section>
+
+<section class="scr" id="editor" style="padding:0"><div class="ed">
+ <div class="row t"><button class="rb2" id="back" aria-label="Save and go back">‹</button><b id="ttl" contenteditable="true" spellcheck="false">Untitled</b><button class="rb2" id="dots" data-open="menu" aria-label="Menu">⋮</button></div>
+ <div class="txt" id="txt" contenteditable="true" spellcheck="false"></div>
+ <div class="tb"><button data-cmd="undo">↶</button><button data-cmd="redo">↷</button><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-open="scan">📷</button></div>
+ <div class="bar" id="bar"><button data-open="scan" aria-label="Scan">⛶</button><button id="aiBtn" data-open="ai" aria-label="AI assistant">✦</button><span class="lg">On device – ENG-IN</span><div class="wave" id="wave"></div><button class="mic" id="mic" aria-label="Record">🎙</button></div>
+</div></section>
+
+<section class="scr" id="journal"><div class="row"><h2 style="flex:1">Daily Journal</h2><button class="rb" id="calBtn" data-open="cal" aria-label="Calendar">▦</button></div>
+ <div class="week" id="week"></div><b>On this day</b><div id="jList"></div></section>
+
+<section class="scr" id="novels"><div class="hero"><small>Trending</small><h3>Forgive Me Never</h3><button class="pill" data-story="0">Start Reading</button></div>
+ <b class="h3" style="display:block">Continue where you left off</b><button class="cont" data-read="1"><span class="cov" style="--g:linear-gradient(150deg,#1b2a4a,#6a4a8a)"></span><span><b>Bound By The Stars</b><br><small style="color:var(--mu)">The Goddess’s Prophecy</small></span></button>
+ <b class="h3" style="display:block">Most liked</b><div class="shelf" id="shelf"></div>
+ <b class="h3" style="display:block">Categories</b><div class="chips" id="cats"></div>
+ <b class="h3" style="display:block">Highest rated</b><div class="shelf" id="shelf2"></div></section>
+
+<section class="scr st" id="story" style="padding:0"><button class="rb fl" data-go="novels" aria-label="Back">‹</button>
+ <div class="top" id="sTop"></div><div class="in"><b style="font-size:24px" id="sT"></b><div class="meta"><span>Eng</span><span>8 Chapters</span><span>👁 797</span><span class="heart" style="color:var(--ac)">♥ <span id="lk">33</span></span></div>
+ <b>About this story</b><p style="color:#c8c8cc;font-size:14px;margin:6px 0 14px">Two strangers, one hidden past and a choice that could change both their lives.</p>
+ <b>Ratings &amp; reviews</b><div class="stars" id="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><small id="rt" style="color:var(--mu)">Tap a star to rate</small>
+ <b class="h3" style="display:block">Similar stories</b><div class="shelf" id="shelf3"></div></div></section>
+<div class="btm" id="sBtm" style="display:none"><button class="sq" id="heart" aria-label="Favourite">♡</button><button class="go" id="readBtn">Read Now</button></div>
+
+<section class="scr rd" id="reader"><div class="row" style="margin-bottom:14px"><button class="rb" data-go="story" aria-label="Back">‹</button><div><small style="color:var(--mu)" id="chN">Chapter 1</small><br><b>Count the Stars</b></div></div>
+ <p>The night the lights went out, Mira counted stars from the rooftop, one for every mistake she had made that year.</p>
+ <p>“You are late,” said the stranger beside her. She had not heard him climb up. His voice was calm, as if he had been waiting for years.</p>
+ <p>“For what?” she asked. He smiled and pointed at the sky, where one star was moving too fast to be a star at all.</p>
+ <p>She should have been afraid. Instead she felt something she had not felt in a long time: the sense that her story was about to begin.</p>
+ <div class="cta"><button data-open="cm">Check comments</button><button data-act="unlock">Unlock Next Chapter →</button></div></section>
+
+<button class="fab" id="fab" data-act="mini" aria-label="Quick voice note">🎙</button>
+<nav class="nav" id="nav" aria-label="Main">
+ <button data-go="home" class="on" aria-label="Home"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg></button>
+ <button data-go="notes" aria-label="Notes"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 10h8M8 14h5"/></svg></button>
+ <button data-go="editor" class="plus" aria-label="New note"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+ <button data-go="journal" aria-label="Journal"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></button>
+ <button data-go="novels" aria-label="eNovels"><svg viewBox="0 0 24 24"><path d="M12 6c-2-2-5-2-8-1v13c3-1 6-1 8 1 2-2 5-2 8-1V5c-3-1-6-1-8 1zM12 6v13"/></svg></button>
+</nav>
+<div class="mini" id="mini"><div class="wave" id="mw" style="flex:1"></div><b style="font-size:13px">Recording…</b><button data-act="ministop" id="miniStop" aria-label="Stop">■</button></div>
+
+<div class="sh pop" id="menu"><div><button data-act="rename">✎ Rename</button><button id="miCol" data-open="col">▤ Add to Collection</button><button data-toast="Link copied">⇪ Share link</button><button data-toast="File exported">⇩ Export file</button></div></div>
+<div class="sh" id="col"><div><b>Add to Collection</b><div class="l"><input class="inp" id="cin" placeholder="Name your collection" aria-label="Collection name"><button class="send" id="csend" data-act="addcol" aria-label="Create">➤</button></div></div></div>
+<div class="sh" id="ai"><div><b>✦ AI Text Assistant</b><p style="color:var(--mu);font-size:13px;margin:6px 0 10px">Choose an operation to enhance your text</p><div class="chips" style="flex-wrap:wrap"><button class="chip" data-act="ai" data-m="todo">To-do lists</button><button class="chip" data-act="ai" data-m="points">Main points</button><button class="chip" data-act="ai" data-m="sum">Summary</button></div></div></div>
+<div class="sh mid" id="gen"><div><b>✦ AI Text Assistant</b><div class="wave" id="gw" style="justify-content:center;margin:14px 0 6px"></div><small style="color:var(--mu)">Generating…</small></div></div>
+<div class="sh" id="res"><div><b>✦ AI Assistance</b><p id="resT" style="white-space:pre-line;margin:12px 0;color:#ddd;font-size:14px;line-height:1.5"></p><button class="big" id="apply" data-act="apply">Apply changes</button></div></div>
+<div class="sh" id="scan"><div><b>Scan</b><br><small style="color:var(--mu)">Image to text</small><div class="chips"><button class="chip">Latin</button><button class="chip">中文</button><button class="chip">日本語</button></div><div class="g2"><button class="tile" data-act="scan" style="align-items:center;justify-content:center">📷<br>From Camera</button><button class="tile" data-act="scan" style="align-items:center;justify-content:center">🗂<br>From Files</button></div><button class="big" data-close>Cancel</button></div></div>
+<div class="sh" id="cal"><div><div class="row"><b style="flex:1">October, 2026</b><button class="rb" data-close aria-label="Close">✕</button></div><div class="cal" id="calG"></div></div></div>
+<div class="sh" id="pro"><div style="text-align:center"><div style="font-size:42px">🎙</div><button class="plan" data-plan><span>○</span> Pro monthly · ₹140/month</button><button class="plan on" data-plan><span>●</span> Pro yearly · ₹1,250/year</button><p style="text-align:left;color:#ccc;font-size:13px;line-height:1.8;margin-top:10px">✔ Advanced voice recognition<br>✔ AI-powered writing assistance<br>✔ Ad-free experience</p><button class="big" data-close data-toast="Demo only – no purchase">Continue</button></div></div>
+<div class="sh" id="game"><div style="text-align:center"><b>Can you beat your speed?</b><p id="gT" style="color:var(--mu);font-size:13px;margin:6px 0">Tap as fast as you can for 5 seconds</p><button class="big" id="gB" data-act="tapgame" style="background:var(--ac);color:#fff;font-size:22px;padding:30px">Tap! 0</button></div></div>
+<div class="sh" id="cm"><div><b>Comments</b><div id="cList"><p class="empty">No comments yet</p></div><div class="l"><input class="inp" id="cmi" placeholder="Add a comment" aria-label="Comment"><button class="send" data-act="comment" aria-label="Post">➤</button></div></div></div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
