@@ -97,3 +97,4 @@ h2{font-size:22px;margin:2px 0 12px}
 .rip{animation:rip .4s}@keyframes rip{40%{scale:.7}100%{scale:1.4;opacity:0}}
 .demo{position:absolute;bottom:84px;left:50%;transform:translateX(-50%);z-index:9;font-size:11px;color:var(--mu);background:#1c1c1eee;border-radius:99px;padding:6px 12px;white-space:nowrap}.demo b{color:#fff}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
