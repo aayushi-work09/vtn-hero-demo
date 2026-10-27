@@ -24,8 +24,8 @@ body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .hi{flex:1}.hi small{color:#9a9aa0;font-size:12px}.hi b{display:block;font-size:19px}
 .rb{width:36px;height:36px;border-radius:50%;background:#1f1f22;display:grid;place-items:center;font-size:14px}
 .pre{display:block;width:360px;height:85px}
-.rest{display:block;width:360px;height:453px}
-.end{height:130px}
+.rest{display:block;width:360px;height:537px}
+.end{height:72px}
 /* animation slot: glow + tilted, floating card */
 .slot{position:relative;height:470px}
 .slot::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 48%,#ff1f5718,transparent 70%)}
@@ -38,31 +38,31 @@ body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .hint{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.08em;color:#8a8a90}
 .phone.before .slot{display:none}
 /* fixed bottom: floating mic + navigation from the real app */
-.dock{position:absolute;left:0;right:0;bottom:0;height:140px;pointer-events:none;background:linear-gradient(transparent,#000 55%)}
-.dock img{position:absolute;display:block;mix-blend-mode:lighten}
-.nv{left:10px;bottom:5px;width:340px;height:66.5px}
-.fb{left:287.5px;bottom:79px;width:61px;height:62px}
+.dock{position:absolute;left:0;right:0;bottom:0;height:150px;pointer-events:none}
+.dock img{position:absolute;display:block}
+.nv{left:12px;bottom:10px;width:336px;height:60px}
+.fb{left:290px;bottom:82px;width:56px;height:56px}
 @media (prefers-reduced-motion:reduce){.float{animation:none}.card{transition:none}}
 </style>
 </head>
 <body>
 <div class="top" id="top">
  <div class="seg" role="group" aria-label="Preview mode"><button id="bB">Before</button><button id="bA" class="on">After (with animation)</button></div><br>
- The animation sits between the Go Premium banner and the rest of the home screen. Scroll inside the phone to see the original tiles, novel card, game and tabs moved below it.
+ The live workflow sits between the Go Premium banner and the rest of the home screen. Scroll inside the phone to see the original tiles, novel card, game, tabs and notes area below it.
 </div>
 <div class="wrap" id="wrap"><div class="phone" id="ph">
  <div class="scroll" id="sc">
   <div class="hdr"><div class="av">U</div><div class="hi"><small>Good evening</small><b>Hi, User</b></div><div class="rb">?</div><div class="rb">⚙</div></div>
   <img class="pre" src="preview-premium.jpg" alt="Go Premium banner">
   <div class="slot">
-   <span class="tag">LIVE HERO ANIMATION</span><button class="rp" id="rp" aria-label="Replay animation">&#8635; Replay</button>
+   <span class="tag">LIVE WORKFLOW</span><button class="rp" id="rp" aria-label="Replay animation">&#8635; Replay</button>
    <div class="float"><div class="card" id="card"><iframe id="fr" src="index.html" title="Animated hero section"></iframe></div></div>
    <span class="hint">&#8595; SCROLL FOR THE REST OF THE HOME SCREEN</span>
   </div>
-  <img class="rest" src="preview-rest.jpg" alt="New Note and Recent Note tiles, novel card, game tile and Recent/Pinned notes tabs">
+  <img class="rest" src="preview-rest.jpg" alt="New Note and Recent Note tiles, novel card, game tile, Recent/Pinned notes tabs and the empty notes illustration">
   <div class="end"></div>
  </div>
- <div class="dock"><img class="nv" src="preview-dock.jpg" alt="Bottom navigation"><img class="fb" src="preview-fab.jpg" alt="Floating mic button"></div>
+ <div class="dock"><img class="nv" src="preview-dock.png" alt="Bottom navigation"><img class="fb" src="preview-fab.png" alt="Floating mic button"></div>
 </div></div>
 <script>
 (()=>{
