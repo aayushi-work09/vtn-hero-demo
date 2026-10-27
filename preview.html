@@ -20,33 +20,48 @@ body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .av{width:40px;height:40px;border-radius:50%;background:#ff5a1f;display:grid;place-items:center;font-weight:700}
 .hi{flex:1}.hi small{color:#9a9aa0;font-size:12px}.hi b{display:block;font-size:19px}
 .rb{width:36px;height:36px;border-radius:50%;background:#1f1f22;display:grid;place-items:center;font-size:14px}
-.slot{position:relative;height:460px;overflow:hidden}
-.slot iframe{position:absolute;left:0;top:0;width:420px;height:537px;border:0;transform-origin:0 0;transform:scale(.857)}
-.slot img,.bot{display:block;width:360px}
-.slot img{height:460px}.bot{height:240px}
-.slot img[hidden],.slot iframe[hidden]{display:none}
+.hdr,.bot{transition:filter .4s,opacity .4s}
+.phone:not(.before) .hdr,.phone:not(.before) .bot{filter:brightness(.38) saturate(.7)}
+.bot{display:block;width:360px;height:240px}
+/* hero slot: glow + tilted, floating card */
+.slot{position:relative;height:460px}
+.slot::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,#ff1f5740,transparent 70%);transition:opacity .4s}
+.tag{position:absolute;top:6px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.14em;color:#ff7a96;font-weight:700}
+.float{position:absolute;left:14px;top:30px;width:332px;height:404px;perspective:900px;animation:fl 4.5s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-6px)}}
+.card{width:100%;height:100%;border-radius:22px;overflow:hidden;background:#000;transform:rotateX(var(--rx,6deg)) rotateY(var(--ry,-8deg));transition:transform .25s ease-out;box-shadow:0 0 0 1.5px #ff1f57,0 0 0 7px #ff1f5722,0 22px 44px #ff1f5755}
+.card iframe{width:420px;height:511px;border:0;transform-origin:0 0;transform:scale(.7905);display:block}
+.slot img{position:absolute;left:0;top:0;width:360px;height:460px;display:block}
+.phone.before .float,.phone.before .tag,.phone.before .slot::before{display:none}
+.slot img[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.float{animation:none}.card{transition:none}}
 </style>
 </head>
 <body>
 <div class="top" id="top">
  <div class="seg" role="group" aria-label="Preview mode"><button id="bB">Before</button><button id="bA" class="on">After (with animation)</button></div><br>
- The live animation replaces the hero area (banner, tiles, novel card, game). The header, tabs, floating mic and bottom navigation are unchanged. Tap inside the animation to try it.
+ The highlighted card is the live hero animation. Header, tabs, floating mic and bottom navigation are the rest of the app, dimmed for focus. Tap inside the card to try it.
 </div>
-<div class="wrap" id="wrap"><div class="phone">
+<div class="wrap" id="wrap"><div class="phone" id="ph">
  <div class="hdr"><div class="av">U</div><div class="hi"><small>Good evening</small><b>Hi, User</b></div><div class="rb">?</div><div class="rb">⚙</div></div>
  <div class="slot">
-  <iframe id="fr" src="index.html" title="Animated hero section" loading="eager"></iframe>
+  <span class="tag">LIVE HERO ANIMATION</span>
+  <div class="float"><div class="card" id="card"><iframe id="fr" src="index.html" title="Animated hero section"></iframe></div></div>
   <img id="im" src="preview-before.jpg" alt="Current hero section of the app" hidden>
  </div>
  <img class="bot" src="preview-bottom.jpg" alt="Recent and pinned notes tabs, floating mic and bottom navigation">
 </div></div>
 <script>
 (()=>{
-const $=s=>document.querySelector(s),fr=$('#fr'),im=$('#im');
+const $=s=>document.querySelector(s),fr=$('#fr'),im=$('#im'),ph=$('#ph'),card=$('#card');
 function fit(){const h=innerHeight-$('#top').offsetHeight-8;document.documentElement.style.setProperty('--s',Math.max(.4,Math.min(innerWidth/360,h/800,1.3)))}
 function mode(after){$('#bA').classList.toggle('on',after);$('#bB').classList.toggle('on',!after);
- im.hidden=after;fr.hidden=!after;fr.src=after?'index.html':'about:blank'}
+ ph.classList.toggle('before',!after);im.hidden=after;fr.src=after?'index.html':'about:blank'}
 $('#bA').onclick=()=>mode(true);$('#bB').onclick=()=>mode(false);
+// mouse only: card leans slightly towards the pointer
+ph.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=ph.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+ card.style.setProperty('--ry',(x*16)+'deg');card.style.setProperty('--rx',(2-y*12)+'deg')});
+ph.addEventListener('pointerleave',()=>{card.style.removeProperty('--ry');card.style.removeProperty('--rx')});
 addEventListener('resize',fit);fit();setTimeout(fit,300);
 })();
 </script>
