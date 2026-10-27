@@ -16,47 +16,62 @@ body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .seg button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .wrap{flex:none;width:calc(360px*var(--s,1));height:calc(800px*var(--s,1))}
 .phone{width:360px;height:800px;background:#000;border-radius:28px;overflow:hidden;position:relative;transform-origin:0 0;transform:scale(var(--s,1));box-shadow:0 0 0 1px #2a2a2e}
-.hdr{height:100px;display:flex;align-items:center;gap:10px;padding:26px 14px 0}
+/* scrolling home screen: header, premium banner, ANIMATION, rest of the original home */
+.scroll{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;overscroll-behavior:contain}
+.scroll::-webkit-scrollbar{display:none}
+.hdr{height:80px;display:flex;align-items:center;gap:10px;padding:14px 14px 0}
 .av{width:40px;height:40px;border-radius:50%;background:#ff5a1f;display:grid;place-items:center;font-weight:700}
 .hi{flex:1}.hi small{color:#9a9aa0;font-size:12px}.hi b{display:block;font-size:19px}
 .rb{width:36px;height:36px;border-radius:50%;background:#1f1f22;display:grid;place-items:center;font-size:14px}
-.hdr,.bot{transition:filter .4s,opacity .4s}
-.phone:not(.before) .hdr,.phone:not(.before) .bot{filter:brightness(.38) saturate(.7)}
-.bot{display:block;width:360px;height:240px}
-/* hero slot: glow + tilted, floating card */
-.slot{position:relative;height:460px}
-.slot::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,#ff1f5740,transparent 70%);transition:opacity .4s}
-.tag{position:absolute;top:6px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.14em;color:#ff7a96;font-weight:700}
-.float{position:absolute;left:14px;top:30px;width:332px;height:404px;perspective:900px;animation:fl 4.5s ease-in-out infinite}
+.pre{display:block;width:360px;height:85px}
+.rest{display:block;width:360px;height:453px}
+.end{height:130px}
+/* animation slot: glow + tilted, floating card */
+.slot{position:relative;height:470px}
+.slot::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 48%,#ff1f5718,transparent 70%)}
+.tag{position:absolute;top:8px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.14em;color:#ff7a96;font-weight:700}
+.rp{position:absolute;top:4px;right:12px;z-index:2;font:inherit;font-size:10px;color:#ff7a96;background:none;border:0;cursor:pointer;padding:4px}
+.float{position:absolute;left:14px;top:32px;width:332px;height:404px;perspective:900px;animation:fl 4.5s ease-in-out infinite}
 @keyframes fl{50%{transform:translateY(-6px)}}
-.card{width:100%;height:100%;border-radius:22px;overflow:hidden;background:#000;transform:rotateX(var(--rx,6deg)) rotateY(var(--ry,-8deg));transition:transform .25s ease-out;box-shadow:0 0 0 1.5px #ff1f57,0 0 0 7px #ff1f5722,0 22px 44px #ff1f5755}
+.card{width:100%;height:100%;border-radius:22px;overflow:hidden;background:#000;transform:rotateX(var(--rx,6deg)) rotateY(var(--ry,-8deg));transition:transform .25s ease-out;box-shadow:0 0 0 1.5px #ff1f57,0 0 0 5px #ff1f5722,0 8px 18px #ff1f5744}
 .card iframe{width:420px;height:511px;border:0;transform-origin:0 0;transform:scale(.7905);display:block}
-.slot img{position:absolute;left:0;top:0;width:360px;height:460px;display:block}
-.phone.before .float,.phone.before .tag,.phone.before .slot::before{display:none}
-.slot img[hidden]{display:none}
+.hint{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.08em;color:#8a8a90}
+.phone.before .slot{display:none}
+/* fixed bottom: floating mic + navigation from the real app */
+.dock{position:absolute;left:0;right:0;bottom:0;height:140px;pointer-events:none;background:linear-gradient(transparent,#000 55%)}
+.dock img{position:absolute;display:block;mix-blend-mode:lighten}
+.nv{left:10px;bottom:5px;width:340px;height:66.5px}
+.fb{left:287.5px;bottom:79px;width:61px;height:62px}
 @media (prefers-reduced-motion:reduce){.float{animation:none}.card{transition:none}}
 </style>
 </head>
 <body>
 <div class="top" id="top">
  <div class="seg" role="group" aria-label="Preview mode"><button id="bB">Before</button><button id="bA" class="on">After (with animation)</button></div><br>
- The highlighted card is the live hero animation. Header, tabs, floating mic and bottom navigation are the rest of the app, dimmed for focus. Tap inside the card to try it.
+ The animation sits between the Go Premium banner and the rest of the home screen. Scroll inside the phone to see the original tiles, novel card, game and tabs moved below it.
 </div>
 <div class="wrap" id="wrap"><div class="phone" id="ph">
- <div class="hdr"><div class="av">U</div><div class="hi"><small>Good evening</small><b>Hi, User</b></div><div class="rb">?</div><div class="rb">⚙</div></div>
- <div class="slot">
-  <span class="tag">LIVE HERO ANIMATION</span>
-  <div class="float"><div class="card" id="card"><iframe id="fr" src="index.html" title="Animated hero section"></iframe></div></div>
-  <img id="im" src="preview-before.jpg" alt="Current hero section of the app" hidden>
+ <div class="scroll" id="sc">
+  <div class="hdr"><div class="av">U</div><div class="hi"><small>Good evening</small><b>Hi, User</b></div><div class="rb">?</div><div class="rb">⚙</div></div>
+  <img class="pre" src="preview-premium.jpg" alt="Go Premium banner">
+  <div class="slot">
+   <span class="tag">LIVE HERO ANIMATION</span><button class="rp" id="rp" aria-label="Replay animation">&#8635; Replay</button>
+   <div class="float"><div class="card" id="card"><iframe id="fr" src="index.html" title="Animated hero section"></iframe></div></div>
+   <span class="hint">&#8595; SCROLL FOR THE REST OF THE HOME SCREEN</span>
+  </div>
+  <img class="rest" src="preview-rest.jpg" alt="New Note and Recent Note tiles, novel card, game tile and Recent/Pinned notes tabs">
+  <div class="end"></div>
  </div>
- <img class="bot" src="preview-bottom.jpg" alt="Recent and pinned notes tabs, floating mic and bottom navigation">
+ <div class="dock"><img class="nv" src="preview-dock.jpg" alt="Bottom navigation"><img class="fb" src="preview-fab.jpg" alt="Floating mic button"></div>
 </div></div>
 <script>
 (()=>{
-const $=s=>document.querySelector(s),fr=$('#fr'),im=$('#im'),ph=$('#ph'),card=$('#card');
+const $=s=>document.querySelector(s),fr=$('#fr'),ph=$('#ph'),card=$('#card'),sc=$('#sc');
 function fit(){const h=innerHeight-$('#top').offsetHeight-8;document.documentElement.style.setProperty('--s',Math.max(.4,Math.min(innerWidth/360,h/800,1.3)))}
 function mode(after){$('#bA').classList.toggle('on',after);$('#bB').classList.toggle('on',!after);
- ph.classList.toggle('before',!after);im.hidden=after;fr.src=after?'index.html':'about:blank'}
+ ph.classList.toggle('before',!after);sc.scrollTop=0;fr.src=after?'index.html':'about:blank'}
+fr.addEventListener('load',()=>{try{const d=fr.contentDocument,t=d.createElement('style');t.textContent='.demo{display:none!important}';d.head.append(t)}catch(e){}});
+$('#rp').onclick=()=>{fr.src='about:blank';setTimeout(()=>fr.src='index.html',60)};
 $('#bA').onclick=()=>mode(true);$('#bB').onclick=()=>mode(false);
 // mouse only: card leans slightly towards the pointer
 ph.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=ph.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
