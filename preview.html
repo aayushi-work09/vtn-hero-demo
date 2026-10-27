@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Voice To Note – In-app Hero Preview</title>
-<meta name="description" content="Interactive preview of the Voice To Note hero section: a live workflow animation placed inside the app's home screen.">
+<meta name="description" content="Interactive preview of the Voice To Note hero section, showing a live workflow animation placed inside the app's real home screen layout.">
 <link rel="canonical" href="https://vtn-hero-demo.vercel.app/preview.html">
 <meta name="keywords" content="Voice To Note, hero animation, voice notes app, app demo">
 <style>
@@ -46,9 +46,11 @@ body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .nv{left:12px;bottom:10px;width:336px;height:60px}
 .fb{left:290px;bottom:82px;width:56px;height:56px}
 @media (prefers-reduced-motion:reduce){.float{animation:none}.card{transition:none}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
 <body>
+<h1 class="sr">Voice To Note – Hero Section Live Workflow Preview</h1>
 <div class="top" id="top">
  <div class="seg" role="group" aria-label="Preview mode"><button id="bB">Before</button><button id="bA" class="on">After (with animation)</button></div><br>
 </div>
