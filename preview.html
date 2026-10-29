@@ -71,10 +71,11 @@ body{display:flex;flex-direction:column;align-items:center;overflow:hidden}
 (()=>{
 const $=s=>document.querySelector(s),fr=$('#fr'),ph=$('#ph'),card=$('#card'),sc=$('#sc');
 function fit(){const h=innerHeight-$('#top').offsetHeight-8;document.documentElement.style.setProperty('--s',Math.max(.4,Math.min(innerWidth/360,h/800,1.3)))}
+function load(){fr.style.visibility='hidden';fr.src='index.html'}
 function mode(after){$('#bA').classList.toggle('on',after);$('#bB').classList.toggle('on',!after);
- ph.classList.toggle('before',!after);sc.scrollTop=0;fr.src=after?'index.html':'about:blank'}
-fr.addEventListener('load',()=>{try{const d=fr.contentDocument,t=d.createElement('style');t.textContent='.demo{display:none!important}';d.head.append(t)}catch(e){}});
-$('#rp').onclick=()=>{fr.src='about:blank';setTimeout(()=>fr.src='index.html',60)};
+ ph.classList.toggle('before',!after);sc.scrollTop=0;if(after)load();else fr.src='about:blank'}
+fr.addEventListener('load',()=>{fr.style.visibility='visible';try{const d=fr.contentDocument,t=d.createElement('style');t.textContent='.demo{display:none!important}';d.head.append(t)}catch(e){}});
+$('#rp').onclick=load;
 $('#bA').onclick=()=>mode(true);$('#bB').onclick=()=>mode(false);
 // mouse only: card leans slightly towards the pointer
 ph.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=ph.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
