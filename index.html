@@ -11,42 +11,50 @@
 </head>
 <body>
 <h1 class="sr">Voice To Note – Explained Workflow Animation</h1>
-<main class="app" id="app" aria-label="Voice To Note interactive demo">
+<div class="wrap" id="wrap"><main class="app" id="app" aria-label="Voice To Note interactive demo">
 <div class="toast" id="toast"></div><div class="ghost" id="ghost"></div><div class="ring" id="ring"></div><div class="tip" id="tip"></div><div class="prog"><i id="prog"></i></div>
-<button class="demo" id="replay"></button>
 
-<div class="splash on" id="splash"><svg viewBox="0 0 64 64" width="96" height="96"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#8d8d93"/></linearGradient></defs><g fill="url(#lg)"><rect x="6" y="26" width="5" height="14" rx="2.5"/><rect x="15" y="18" width="5" height="30" rx="2.5"/><rect x="24" y="10" width="5" height="46" rx="2.5"/><rect x="33" y="4" width="5" height="54" rx="2.5"/><rect x="42" y="14" width="5" height="34" rx="2.5"/></g><path d="M54 6l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM50 24l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#ff2d55"/></svg></div>
 
 <section class="scr on" id="home">
- <div class="row hd"><span class="av">U</span><div class="hi"><small>Good morning</small><b>User</b></div><button class="ib" data-toast="Help centre" aria-label="Help"><img src="h-help.png" alt=""></button><button class="ib" id="gear" data-go="settings" aria-label="Settings"><img src="h-gear.png" alt=""></button></div>
+ <div class="row hd"><span class="av">U</span><div class="hi"><small>Good morning</small><b>User</b></div><button class="ib" id="helpBtn" data-act="help" aria-label="Help"><img src="h-help.png" alt=""></button><button class="ib" id="gear" data-go="settings" aria-label="Settings"><img src="h-gear.png" alt=""></button></div>
  <button class="im" id="premBtn" data-open="pro" aria-label="Go Premium"><img src="h-prem.jpg" alt="Go Premium"></button>
  <div class="im ov"><img src="h-tiles.jpg" alt=""><button id="newTile" data-go="editor" aria-label="New Note"></button><button data-act="recent" aria-label="Recent Note"></button></div>
  <button class="im" data-toast="eNovels is not part of this demo" aria-label="New Releases"><img src="h-novel.jpg" alt="New Releases"></button>
- <button class="im" data-toast="Speed game"><img src="h-game.jpg" alt="Play the game"></button>
+ <button class="im" id="gameBtn" data-go="game" aria-label="Play the game"><img src="h-game.jpg" alt="Play the game"></button>
  <div class="seg2" id="htabs"><button class="on" data-tab="r"><i data-i="clock" data-s="16"></i>Recent Notes</button><button data-tab="p">• Pinned Notes</button></div>
  <div id="homeList"></div>
- <div class="ad"><svg width="26" height="26"><use href="#lgo"/></svg><span><b>VoiceToNotes <i>Pro</i></b><small>Just for you!</small></span><button data-open="pro">Buy now</button></div>
-</section>
+ </section>
 
 <section class="scr" id="notes"><div class="row hd"><h2 style="flex:1">My Notes</h2><button class="rb" data-i="fil" data-toast="Filter"></button><button class="rb" data-i="users" data-toast="Shared notes"></button><button class="rb" data-i="srch" data-toast="Search"></button></div>
  <div class="seg2" style="margin:0 0 8px"><button class="on" data-nt="n">Notes</button><button id="tabC" data-nt="c">Collections</button></div><div id="noteList"></div></section>
+<section class="scr" id="coll"><div class="row hd"><button class="rb" id="cback" data-act="cback" data-i="back" aria-label="Back to collections"></button><h2 id="cTitle" style="flex:1;font-size:21px">Collection</h2></div><div id="cList"></div></section>
 
 <section class="scr" id="editor" style="padding:0"><div class="ed">
  <div class="row t"><button class="rb" id="back" data-i="back" aria-label="Save and go back"></button><div class="tt"><b id="ttl" contenteditable="true" spellcheck="false">Untitled</b><i data-i="edit" data-s="14"></i></div><button class="rb" id="dots" data-open="menu" data-i="dots" aria-label="Menu"></button></div>
  <div class="txt" id="txt" contenteditable="true" spellcheck="false"></div>
- <div class="tb"><button data-cmd="undo">↶</button><button data-cmd="redo">↷</button><button id="fmtBtn" data-open="fmt">Aa</button><button data-i="chk" data-s="16" data-toast="Checklist"></button><button data-i="list" data-s="16" data-toast="List"></button><button id="cam" data-open="img" data-i="cam" data-s="16" aria-label="Insert image"></button><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button></div>
- <div class="bar" id="bar"><div class="b1"><button data-open="scan" data-i="scan" aria-label="Scan"></button><button id="aiBtn" data-open="ai" data-i="spark" aria-label="AI assistant"></button><span class="lg">On device – ENG-IN ⌃</span><button class="mic" id="mic" data-i="mic" aria-label="Record"></button></div>
+<div class="tb" id="tb" role="toolbar" aria-label="Text formatting"><button data-cmd="undo" id="tbUndo" data-i="undo" data-s="19" aria-label="Undo"></button><button data-cmd="redo" id="tbRedo" data-i="redo" data-s="19" aria-label="Redo"></button><i class="sp"></i><button id="fmtBtn" data-open="fmt" class="tx" aria-label="Format">Aa</button><button data-i="chkl" data-s="19" data-toast="Checklist" aria-label="Checklist"></button><button data-i="olist" data-s="19" data-toast="List" aria-label="List"></button><button id="cam" data-open="img" data-i="cam" data-s="19" aria-label="Insert image"></button><i class="sp"></i><button data-cmd="bold" class="tx" aria-label="Bold"><b>B</b></button><button data-cmd="italic" class="tx" aria-label="Italic"><i>I</i></button><button data-cmd="underline" class="tx" aria-label="Underline"><u>U</u></button><button data-cmd="hiliteColor" data-v="#d9e32c" data-i="hl" data-s="19" aria-label="Highlight"></button><i class="sp"></i><button data-cmd="justifyLeft" class="on" data-i="alL" data-s="19" aria-label="Align left"></button><button data-cmd="justifyCenter" data-i="alC" data-s="19" aria-label="Align center"></button><button data-cmd="justifyRight" data-i="alR" data-s="19" aria-label="Align right"></button><button data-cmd="justifyFull" data-i="alJ" data-s="19" aria-label="Justify"></button><i class="sp"></i><button data-cmd="insertHorizontalRule" data-i="minus" data-s="19" aria-label="Divider"></button><span class="fs"><button data-act="fsdn" data-i="back" data-s="14" aria-label="Smaller text"></button><b id="fsv">16</b><button data-act="fsup" data-i="next" data-s="14" aria-label="Larger text"></button></span></div>
+ <div class="bar" id="bar"><div class="b1"><button data-open="scan" data-i="scan2" data-s="24" aria-label="Scan"></button><button id="aiBtn" data-open="ai" data-i="spark3" data-s="24" aria-label="AI assistant"></button><i class="dv"></i><span class="lg">On device - ENG-IN<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></span><button class="mic" id="mic" data-i="micr" data-s="28" aria-label="Record"></button></div>
   <div class="b2"><span data-i="globe"></span><div class="wave" id="wave"></div><button class="mic" id="chk" data-i="chk" aria-label="Finish"></button></div></div>
 </div></section>
 
-<section class="scr" id="journal"><div class="row hd"><h2 style="flex:1">Daily Journal</h2><button class="rb" id="calBtn" data-open="cal" data-i="cal" aria-label="Calendar"></button></div>
- <div class="week" id="week"></div><b>On this Day</b><div id="jList"></div></section>
+<section class="scr" id="journal"><div class="jc" id="jc">
+ <div class="jh" id="jh"><div class="row hd"><h2 style="flex:1">Daily Journal</h2><button class="rb" id="calBtn" data-act="calopen" data-i="cal" aria-label="Calendar"></button></div>
+ <div class="week" id="week"></div></div>
+ <div class="calp" id="calp"><div class="row ch"><button class="cnav" id="cprev" data-act="cprev" data-i="back" data-s="20" aria-label="Previous month"></button><b class="cm" id="cmon">October, 2026</b><button class="cnav" id="cnext" data-act="cnext" data-i="next" data-s="20" aria-label="Next month"></button><span style="flex:1"></span><button class="rb" id="calX" data-act="calclose" data-i="x" data-s="16" aria-label="Close calendar"></button></div><div class="cal" id="calG"></div></div>
+ </div><b class="otd">On this Day</b><div id="jList"></div></section>
 
 <section class="scr" id="settings"><div class="row hd"><button class="rb" data-go="home" data-i="back" aria-label="Back"></button><b style="flex:1;text-align:center;margin-right:40px;font-size:17px">Settings</b></div>
  <div class="pf"><span class="av big">U</span><b>User</b><small>user@example.com</small></div>
  <button class="im" data-open="pro"><img src="h-prem.jpg" alt="Go Premium"></button><div id="setL"></div></section>
 
-<button class="fab" id="fab" data-act="mini" aria-label="Quick voice note"><img src="preview-fab.png" alt=""></button>
+<section class="scr" id="game" style="padding:0"><div class="gm"><div class="row t"><button class="rb" id="gback" data-go="home" data-i="back" aria-label="Back"></button><b class="gt">Speed test</b><span style="width:40px"></span></div>
+ <div class="ring2"><b id="gtime">01:00</b></div>
+ <div class="gtx"><b>Ready? Get Set, GO!</b><p>Check how many words you can speak in a minute!</p></div>
+ <button class="big" id="gstart" data-act="gstart">Start the Test</button>
+ <div class="grow"><div class="wave" id="gw2"></div><button class="big rs" id="greset" data-act="greset">Reset</button></div></div></section>
+
+<button class="fab" id="fab" data-act="fab" aria-label="VoiceToNotes Pro offer"><img src="preview-fab.png" alt=""></button>
+<div class="pill" id="pill" data-act="pillbuy" role="button" tabindex="-1" aria-label="VoiceToNotes Pro, Buy now"><svg width="30" height="35" aria-hidden="true"><use href="#lgo"/></svg><span class="pt"><b>VoiceToNotes <i>Pro</i></b><small>Just for you!</small></span><button class="by" data-act="pillbuy">Buy now</button></div>
 <button class="fab off" id="fab2" data-toast="New collection" data-i="fplus" data-s="24" aria-label="New collection"></button>
 <nav class="nav" id="nav" aria-label="Main">
  <div class="np">
@@ -57,26 +65,28 @@
  </div>
  <button class="nb" data-toast="eNovels is not part of this demo" aria-label="eNovels"><img src="nav-book.png" alt=""></button>
 </nav>
-<div class="mini" id="mini"><div class="wave" id="mw" style="flex:1"></div><b style="font-size:13px">Recording…</b><button data-act="ministop" id="miniStop" aria-label="Stop">■</button></div>
 
+<div class="sh tut" id="tut"><div><button class="x" data-close data-i="x" data-s="14" aria-label="Close"></button><b id="tT"></b><p id="tP"></p><div class="row"><button class="ml" data-close>Maybe Later</button><button class="cn" id="tCont" data-act="tut">Continue</button></div><i class="ar" id="tAr"></i></div></div>
 <div class="sh pop" id="menu"><div id="menuL"></div></div>
 <div class="sh" id="col"><div><b class="sht">Add to Collection</b><div id="colL"></div></div></div>
 <div class="sh" id="fmt"><div><div class="row"><b style="flex:1">Format</b><button class="rb" data-close data-i="x" data-s="16" aria-label="Close"></button></div><div class="chips"><button class="chip" data-f="t">Title</button><button class="chip" data-f="h">Heading</button><button class="chip" data-f="s">Subheading</button><button class="chip" data-f="b">Body</button></div><div class="grp"><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><button data-cmd="strikeThrough"><s>S</s></button></div></div></div>
-<div class="sh" id="ai"><div><b class="sht">✦ AI Text Assistant</b><p class="mu">Choose an operation to enhance your text</p><div class="chips"><button class="chip" data-act="ai" data-m="todo">To-do lists</button><button class="chip" data-act="ai" data-m="points">Main points</button><button class="chip" data-act="ai" data-m="sum">Summary</button></div><div class="pr"><span>Enter your prompt</span><button class="send" data-act="ai" data-m="sum" data-i="send" data-s="16" aria-label="Send"></button></div></div></div>
-<div class="sh mid" id="gen"><div><b>✦ AI Text Assistant</b><div class="wave" id="gw" style="justify-content:center;margin:14px 0 6px"></div><small class="mu">Generating…</small></div></div>
-<div class="sh" id="res"><div class="lt"><div class="row"><b style="flex:1">✦ AI Assistance</b><span data-i="edit" data-s="18"></span><span data-i="copy" data-s="18"></span><button data-close data-i="x" data-s="18" aria-label="Close"></button></div><p id="resT"></p><button class="big dk" id="apply" data-act="apply">Apply changes</button></div></div>
+<div class="sh mid aic" id="ai"><div><div class="ait"><span data-i="spark3" data-s="22"></span><b>AI Text Assistant</b></div><p class="mu">Choose an operation to enhance your text</p><div class="chips"><button class="chip" data-act="aipick" data-m="todo" data-p="To-do lists">To-do lists</button><button class="chip" data-act="aipick" data-m="points" data-p="Main points">Main points</button><button class="chip" data-act="aipick" data-m="sum" data-p="Summary">Summary</button></div><div class="pr"><input class="ain" id="aiIn" placeholder="Enter your prompt" aria-label="Enter your prompt" autocomplete="off"><button class="send" id="aiSend" data-act="aisend" data-i="send" data-s="24" aria-label="Send"></button></div></div></div>
+<div class="sh mid aic" id="gen"><div class="gc"><div class="ait"><span data-i="spark3" data-s="22"></span><b>AI Text Assistant</b></div><div class="wave" id="gw" style="justify-content:center;margin:18px 0 12px"></div><small class="mu">Generating…</small></div></div>
+<div class="sh" id="res"><div class="lt"><i class="grab"></i><div class="row rh"><span class="rsp" data-i="spark3" data-s="20"></span><b style="flex:1">AI Assistance</b><button class="ri" data-toast="Editing is off in this demo" data-i="edit" data-s="20" aria-label="Edit"></button><button class="ri" data-toast="Copied to clipboard" data-i="copy" data-s="20" aria-label="Copy"></button><button class="ri" data-close data-i="x" data-s="20" aria-label="Close"></button></div><p id="resT"></p><button class="big dk ap" id="apply" data-act="apply">Apply changes</button></div></div>
+<div class="sh mid" id="ovw"><div class="dlg"><p>Are you sure you want to overwrite on the existing note?</p><div class="row"><button class="dc" id="ovwNo" data-act="ovwcancel">Cancel</button><button class="du" id="ovwYes" data-act="ovwyes">Update</button></div></div></div>
 <div class="sh" id="img"><div><b class="sht">Insert Image to Note</b><p class="mu">Choose an action for your document or photo</p><div class="g2"><button class="tl" data-act="pic" data-i="cam">From Camera</button><button class="tl" id="gal" data-act="pic" data-i="pic">From Gallery</button></div><button class="big gr" data-close>Cancel</button></div></div>
 <div class="sh" id="scan"><div><b class="sht">Scan</b><p class="mu">Image to Text · Select text language</p><div class="chips"><button class="chip on">Latin</button><button class="chip">中文</button><button class="chip">日本語</button><button class="chip">한국어</button></div><div class="g2"><button class="tl" data-act="scan" data-i="cam">From Camera</button><button class="tl" data-act="scan" data-i="file">From Files</button></div><button class="big gr" data-close>Cancel</button></div></div>
 <div class="sh" id="exp"><div><p class="mu">Choose export format</p><div id="expL"></div><button class="big" id="xbtn" data-act="export">Export</button></div></div>
 <div class="sh" id="shr"><div><div class="row"><span class="inp">Email</span><span class="inv">Invite</span></div><b class="sec">People with access</b><div class="row"><span class="av sm">U</span><b style="font-size:13px">User</b><span class="mu">(you)</span></div><button class="drop" id="anyone" data-act="anyone"><span data-i="globe" data-s="16"></span><span style="flex:1;text-align:left" id="anyT">Anyone with the link</span>⌃</button><div class="lnk"><span class="mu">https://links.voicetonotes.ai/s/mqXq…</span><span data-i="copy" data-s="16"></span></div><button class="big" id="sbtn" data-act="share">Share Link</button></div></div>
-<div class="sh" id="cal"><div><div class="row"><b style="flex:1">October, 2026</b><button class="rb" data-close data-i="x" data-s="16" aria-label="Close"></button></div><div class="cal" id="calG"></div></div></div>
-<div class="sh fs" id="pro"><div><div class="row" style="justify-content:flex-end"><button class="rb lt2" data-close data-i="x" data-s="16" aria-label="Close"></button></div>
- <div class="lgc"><svg width="46" height="46"><use href="#lgo"/></svg></div><button class="big dk" style="width:auto;padding:10px 22px;display:block;margin:0 auto" data-toast="Demo only – no purchase">Get Premium</button>
- <button class="plan" data-plan><span>○</span><b>Pro User Membership Monthly</b><em>₹140.00/month</em></button><button class="plan on" data-plan><span>●</span><b>Pro User Membership Yearly</b><em>₹1,250.00/year</em></button>
- <b class="sec dk2">What’s Included</b><p class="inc">☑ Advanced voice recognition<br>☑ AI-powered writing assistance<br>☑ Priority customer support<br>☑ Enjoy an ad-free experience with Premium</p>
- <button class="big dk" data-close data-toast="Demo only – no purchase">Continue</button><small class="foot">Restore Purchases · Terms of Use · Privacy Policy</small></div></div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lgo" viewBox="0 0 64 64"><g fill="#111"><rect x="6" y="26" width="5" height="14" rx="2.5"/><rect x="15" y="18" width="5" height="30" rx="2.5"/><rect x="24" y="10" width="5" height="46" rx="2.5"/><rect x="33" y="4" width="5" height="54" rx="2.5"/><rect x="42" y="14" width="5" height="34" rx="2.5"/></g><path d="M54 6l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ff2d55"/></symbol></svg>
-</main>
+
+<div class="sh fs" id="pro"><div class="pw"><button class="xc" data-close data-i="x" data-s="22" aria-label="Close"></button>
+ <div class="lgc"><svg width="66" height="77" aria-hidden="true"><use href="#lgo"/></svg></div><button class="gp" data-toast="Demo only – no purchase">Get Premium</button>
+ <div class="plans"><button class="plan" data-plan><i class="rd2"></i><span class="pi"><b>Pro User Membership Monthly</b><em>₹140.00/month</em></span></button><button class="plan on" data-plan><i class="rd2"></i><span class="pi"><b>Pro User Membership Yearly</b><em>₹1,250.00/year</em></span></button></div>
+ <b class="wi">What’s Included</b><ul class="inc"><li>Advanced voice recognition</li><li>AI-powered writing assistance</li><li>Priority customer support</li><li>Enjoy an ad-free experience with Premium</li></ul>
+ <div class="pwf"><button class="big dk" data-close data-toast="Demo only – no purchase">Continue</button><div class="foot"><span>Restore Purchases</span><i>•</i><span>Terms of Use</span><i>•</i><span>Privacy Policy</span></div></div></div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lgo" viewBox="16 12 142 166"><g fill="#111"><rect x="22.5" y="67.5" width="13.5" height="66.5" rx="6.75"/><rect x="46" y="54.5" width="14" height="92.5" rx="7"/><rect x="97" y="54.5" width="13.5" height="92.5" rx="6.75"/><rect x="121" y="67.5" width="13.5" height="66.5" rx="6.75"/><rect x="70.5" y="26" width="15.5" height="16.5" rx="3.5"/><path d="M70.5 47.5H86V158L78.25 175 70.5 158Z"/><path d="M119.5 18Q123.5 34.5 140 38.5Q123.5 42.5 119.5 59Q115.5 42.5 99 38.5Q115.5 34.5 119.5 18Z"/><path d="M141 45.2Q143.4 54.8 153 57.2Q143.4 59.6 141 69.2Q138.6 59.6 129 57.2Q138.6 54.8 141 45.2Z"/></g></symbol></svg>
+</main></div>
+<button class="demo" id="replay"></button>
 <script src="script.js"></script>
 </body>
 </html>
