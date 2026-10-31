@@ -1,6 +1,19 @@
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],sleep=ms=>new Promise(r=>setTimeout(r,ms*1.15));
 const app=$('#app'),ghost=$('#ghost'),toast=$('#toast'),txt=$('#txt'),ttl=$('#ttl'),pill=$('#pill'),fabBtn=$('#fab');
+// two optional modes, both OFF for the normal index.html demo:
+//  hero  (?hero)        -> the demo runs inside the small Home-screen card of preview.html; a "camera" follows the action
+//  proto (<html data-proto>) -> preview.html: the user drives the app, no auto demo
+const hero=/hero/.test(location.search),proto=document.documentElement.hasAttribute('data-proto');
+document.documentElement.classList.toggle('hm',hero);
+if(hero){ // IMPORTANT: inside an iframe, scrollIntoView()/focus() would also scroll the PAGE that holds the iframe (the Home screen of preview.html).
+ // So in hero mode they only ever scroll things inside the app itself.
+ const kk=()=>app.getBoundingClientRect().width/app.offsetWidth||1;
+ Element.prototype.scrollIntoView=function(){const k=kk();
+  for(let p=this.parentElement;p&&p!==app;p=p.parentElement){const pr=p.getBoundingClientRect(),er=this.getBoundingClientRect();
+   if(p.scrollWidth>p.clientWidth+1){const r=(er.right-pr.right)/k,l=(er.left-pr.left)/k;if(r>0)p.scrollLeft+=r;else if(l<0)p.scrollLeft+=l}
+   if(p.scrollHeight>p.clientHeight+1){const b=(er.bottom-pr.bottom)/k,t=(er.top-pr.top)/k;if(b>0)p.scrollTop+=b;else if(t<0)p.scrollTop+=t}}};
+ const f0=HTMLElement.prototype.focus;HTMLElement.prototype.focus=function(){return f0.call(this,{preventScroll:true})}}
 // ---- icons: small outline SVGs, drawn in the same style as the app ----
 const I={back:'<path d="m15 18-6-6 6-6"/>',dots:'<circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>',edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>',folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>',fplus:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/><path d="M12 10v6M9 13h6"/>',send:'<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',dl:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',user:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 21v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14a5 5 0 0 1 6 5v2"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',srch:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',fil:'<path d="M22 3H2l8 9.5V19l4 2v-8.5z"/>',x:'<path d="M18 6 6 18M6 6l12 12"/>',chk:'<path d="M20 6 9 17l-5-5"/>',spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/>',mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>',scan:'<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/>',clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',pic:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>',file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',help:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1z"/>',flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',bag:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',theme:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/>',stack:'<rect x="4" y="9" width="16" height="11" rx="2"/><path d="M7 6h10M9 3h6"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',redo:'<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>',chkl:'<rect x="3" y="4" width="6" height="6" rx="1.5"/><path d="m4.4 7 1.1 1.1L7.6 6M12 7h9"/><rect x="3" y="14" width="6" height="6" rx="1.5"/><path d="M12 17h9"/>',olist:'<path d="M11 6h10M11 12h10M11 18h10"/><path d="M3.5 5.2 5 4.5V9M3.6 12.8c.3-.9 2.4-1 2.4.2 0 1-1.6 1.6-2.4 2.8H6M3.6 17.6h2.3l-1.2 1.2c1.3-.2 1.8 1.1.9 1.7-.5.4-1.5.3-2-.3"/>',hl:'<path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/>',alL:'<path d="M21 6H3M15 12H3M17 18H3"/>',alC:'<path d="M21 6H3M17 12H7M19 18H5"/>',alR:'<path d="M21 6H3M21 12H9M21 18H7"/>',alJ:'<path d="M21 6H3M21 12H3M21 18H3"/>',minus:'<path d="M5 12h14"/>',next:'<path d="m9 18 6-6-6-6"/>',spark3:'<path fill="currentColor" stroke="none" d="M9.5 3l1.9 5.1L16.5 10l-5.1 1.9L9.5 17l-1.9-5.1L2.5 10l5.1-1.9z"/><path fill="currentColor" stroke="none" d="M19 2.5l.9 2.4 2.4.9-2.4.9L19 9.1l-.9-2.4-2.4-.9 2.4-.9zM19 14.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/>',scan2:'<path d="M3 8V6a3 3 0 0 1 3-3h2M16 3h2a3 3 0 0 1 3 3v2M21 16v2a3 3 0 0 1-3 3h-2M8 21H6a3 3 0 0 1-3-3v-2"/><rect x="7.5" y="8" width="9" height="8" rx="2" fill="currentColor" stroke="none"/><path d="M7.5 11.2h9" stroke="#1a1a1c" stroke-width="1.5"/>',micr:'<rect x="8.5" y="2" width="7" height="12.5" rx="3.5" fill="currentColor" stroke="none"/><path d="M10.5 6.5h3" stroke="#1a1a1c" stroke-width="1.6"/><path d="M5 11.5a7 7 0 0 0 14 0M12 19v3"/>'};
 const ic=(n,s=20)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${I[n]}</svg>`;
@@ -33,7 +46,9 @@ function drawCal(){
  $('#calG').innerHTML=h;$('#cnext').classList.toggle('dim',y===TD.y&&m===TD.m)}
 // ---- screens ----
 function go(id){
- if(rec)stopRec();closeAll();cur=id;if(id==='game')A.greset();else clearInterval(gi);
+ if(rec)stopRec();closeAll();cur=id;if(hero){const rel=(parseFloat(tip.style.top)||0)-camY; // where the caption sits inside the window
+  camY=0;app.style.setProperty('--cy','0px');tip.style.top=rel+'px'} // hero mode: a new screen starts at its top, so the camera goes back up; the caption keeps its place in the window
+ if(id==='game')A.greset();else clearInterval(gi);
  $$('.scr').forEach(s=>s.classList.toggle('on',s.id===id));const sc=$('#'+id);if(sc)sc.scrollTop=0;
  $('#jc').classList.remove('co');$('#nav').classList.toggle('off',!MAIN.includes(id));
  $('#fab').classList.toggle('off',!(id==='home'||id==='editor'||(id==='notes'&&nt==='n')));$('#fab2').classList.toggle('off',!(id==='notes'&&nt==='c'));
@@ -128,12 +143,20 @@ app.addEventListener('click',e=>{
 });
 // ---- auto demo: ghost finger + spotlight ring + explanation bubble ----
 const ring=$('#ring'),tip=$('#tip'),prog=$('#prog');
+let camY=0; // hero mode: how far (in app pixels) the camera has moved down the 800px-tall app
 function point(el,t,d,g=1){
  const a=app.getBoundingClientRect(),r=el.getBoundingClientRect(),k=a.width/app.offsetWidth||1,x=(r.left-a.left)/k,y=(r.top-a.top)/k,rw=r.width/k,rh=r.height/k,aw=a.width/k,ah=a.height/k;
+ const vh=innerHeight/k; // hero mode: height of the visible window in app pixels
+ if(hero){const fh=Math.min(rh,vh*.45); // very tall targets (e.g. the whole text area): focus on their top part only
+  camY=Math.max(0,Math.min(ah-vh,y+fh/2-vh*.38));app.style.setProperty('--cy',camY+'px')} // target stays in the upper part, caption goes below
  if(g){ghost.style.opacity=.9;ghost.style.transform=`translate(${x+rw/2}px,${y+rh/2}px)`}
  Object.assign(ring.style,{opacity:1,left:x-5+'px',top:y-5+'px',width:rw+10+'px',height:rh+10+'px'});
  if(t){tip.innerHTML='<b>'+t+'</b>'+d;tip.style.opacity=1;
   const w=tip.offsetWidth,h=tip.offsetHeight,up=y>ah*.55;
+  if(hero){ // caption sits at the bottom of the window, or at the top when the target is in the lower half
+   const ty=y+rh/2-camY;
+   tip.style.left=Math.max(6,Math.min(aw-w-6,x+rw/2-w/2))+'px';
+   tip.style.top=(ty>vh*.5?camY+6:camY+vh-h-6)+'px';return}
   tip.style.left=Math.max(8,Math.min(aw-w-8,x+rw/2-w/2))+'px';
   tip.style.top=Math.max(8,Math.min(ah-h-8,up?y-h-14:y+rh+14))+'px'}}
 async function tap(sel,w=600,t='',d=''){const el=$(sel);if(!playing||!el)return;
@@ -230,9 +253,13 @@ $('#aiIn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault()
  addEventListener('pointerup',()=>{drag=0});
  tb.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=0}},true)})();
 syncTb();
-const emb=/embed/.test(location.search);document.documentElement.classList.toggle('emb',emb);
-function fit(){document.documentElement.style.setProperty('--s',Math.max(.3,Math.min(innerWidth/360,(innerHeight-(emb?0:46))/800,1.25)))}
+const emb=proto||hero||/embed/.test(location.search);document.documentElement.classList.toggle('emb',emb);
+function fit(){document.documentElement.style.setProperty('--s',hero?innerWidth/360:Math.max(.3,Math.min(innerWidth/360,(innerHeight-(emb?0:46))/800,1.25)))} // hero: fill the width of the small window
 addEventListener('resize',fit);fit();
 drawCol(0);drawCal();render();
-if(matchMedia('(prefers-reduced-motion:reduce)').matches){$('#replay').className='demo re';$('#replay').innerHTML='▶ Replay demo'}else setTimeout(demo,50);
+if(hero){ // the parent page can pause the demo while another screen is open, and the demo resumes when the tab is visible again
+ addEventListener('message',e=>{if(e.data==='vtn-pause')stop();else if(e.data==='vtn-play'&&!playing)demo()});
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!playing)demo()})}
+if(proto){/* preview.html: no auto demo, the user is in control */}
+else if(matchMedia('(prefers-reduced-motion:reduce)').matches){$('#replay').className='demo re';$('#replay').innerHTML='▶ Replay demo'}else setTimeout(demo,50);
 })();
