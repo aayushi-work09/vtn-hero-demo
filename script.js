@@ -1,5 +1,8 @@
 (()=>{
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],sleep=ms=>new Promise(r=>setTimeout(r,ms*1.15));
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+// Speed multiplier: default 1.15 (15% slower for readability). Override via ?spd=0.9 for embed use.
+const _spd=+new URLSearchParams(location.search).get('spd')||1;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms*_spd));
 const app=$('#app'),ghost=$('#ghost'),toast=$('#toast'),txt=$('#txt'),ttl=$('#ttl'),pill=$('#pill'),fabBtn=$('#fab');
 // two optional modes, both OFF for the normal index.html demo:
 //  hero  (?hero)        -> the demo runs inside the small Home-screen card of preview.html; a "camera" follows the action
@@ -257,8 +260,9 @@ const emb=proto||hero||/embed/.test(location.search);document.documentElement.cl
 function fit(){document.documentElement.style.setProperty('--s',hero?innerWidth/360:Math.max(.3,Math.min(innerWidth/360,(innerHeight-(emb?0:46))/800,1.25)))} // hero: fill the width of the small window
 addEventListener('resize',fit);fit();
 drawCol(0);drawCal();render();
-if(hero){ // the parent page can pause the demo while another screen is open, and the demo resumes when the tab is visible again
- addEventListener('message',e=>{if(e.data==='vtn-pause')stop();else if(e.data==='vtn-play'&&!playing)demo()});
+// Allow postMessage pause/play from any embedding page (hero or ?embed), not just hero mode
+if(hero||/embed/.test(location.search)){
+ addEventListener('message',e=>{if(e.data==='vtn-pause')stop();else if(e.data==='vtn-play')demo()});
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!playing)demo()})}
 if(proto){/* preview.html: no auto demo, the user is in control */}
 else if(matchMedia('(prefers-reduced-motion:reduce)').matches){$('#replay').className='demo re';$('#replay').innerHTML='▶ Replay demo'}else setTimeout(demo,50);
